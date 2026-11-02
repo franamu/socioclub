@@ -1,0 +1,4 @@
+.lista-actividades { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.lista__vacia { text-align: center; color: #666; padding: 2rem; background: #fff; border-radius: var(--radio); }
+@media (max-width: 800px) { .lista-actividades { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .lista-actividades { grid-template-columns: 1fr; } }

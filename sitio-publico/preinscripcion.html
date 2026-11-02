@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulario de preinscripción al Club Los Algarrobos.">
+  <title>Club Los Algarrobos | Preinscripción</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="contenedor encabezado__contenido">
+      <a href="index.html" class="logo" aria-label="Ir al inicio">
+        <img src="img/logo.svg" alt="Escudo del Club Social y Deportivo Los Algarrobos" width="48" height="48">
+        <span>Club Los Algarrobos</span>
+      </a>
+      <nav class="navegacion" aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="actividades.html">Actividades</a></li>
+          <li><a href="preinscripcion.html" class="activo">Preinscripción</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+
+    <section class="seccion">
+      <h1>Preinscripción</h1>
+      <p>Completá el formulario y la secretaría se comunica con vos para confirmar el cupo.</p>
+
+      <div class="dos-columnas">
+        <!-- novalidate: desactivamos la validación nativa del navegador para hacerla con JavaScript -->
+        <form id="form-preinscripcion" class="formulario" novalidate>
+
+          <div class="campo">
+            <label for="nombre">Nombre <span class="obligatorio" aria-hidden="true">*</span></label>
+            <input type="text" id="nombre" name="nombre" autocomplete="given-name">
+            <span class="error" id="error-nombre" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="apellido">Apellido <span class="obligatorio" aria-hidden="true">*</span></label>
+            <input type="text" id="apellido" name="apellido" autocomplete="family-name">
+            <span class="error" id="error-apellido" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="dni">DNI (sin puntos) <span class="obligatorio" aria-hidden="true">*</span></label>
+            <input type="text" id="dni" name="dni" inputmode="numeric" placeholder="Ej: 40123456">
+            <span class="error" id="error-dni" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="fechaNacimiento">Fecha de nacimiento <span class="obligatorio" aria-hidden="true">*</span></label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+            <span class="error" id="error-fechaNacimiento" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="email">Email <span class="obligatorio" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="nombre@correo.com">
+            <span class="error" id="error-email" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" autocomplete="tel" placeholder="351 4567890">
+            <span class="error" id="error-telefono" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="actividad">Actividad de interés <span class="obligatorio" aria-hidden="true">*</span></label>
+            <select id="actividad" name="actividad">
+              <option value="">Seleccioná una actividad</option>
+              <!-- las opciones se generan con JavaScript -->
+            </select>
+            <span class="error" id="error-actividad" aria-live="polite"></span>
+          </div>
+
+          <div class="campo campo--check">
+            <input type="checkbox" id="acepta" name="acepta">
+            <label for="acepta">Acepto que el club me contacte por teléfono o email</label>
+            <span class="error" id="error-acepta" aria-live="polite"></span>
+          </div>
+
+          <div class="acciones">
+            <button type="submit" class="boton boton--primario">Enviar preinscripción</button>
+            <button type="button" id="btn-volver" class="boton boton--secundario">Volver</button>
+          </div>
+        </form>
+
+        <aside class="aviso">
+          <h2>Antes de enviar</h2>
+          <ul>
+            <li>El DNI va sin puntos: 7 u 8 dígitos.</li>
+            <li>Revisá que la edad corresponda a la actividad elegida.</li>
+            <li>La preinscripción no reserva cupo: la secretaría lo confirma.</li>
+          </ul>
+        </aside>
+      </div>
+
+      <!-- Mensaje de éxito: oculto hasta que el formulario se valida -->
+      <article id="mensaje-exito" class="mensaje-exito oculto" role="status">
+        <h2>¡Preinscripción recibida!</h2>
+        <p id="texto-exito"></p>
+        <a href="index.html" class="boton boton--primario">Volver al inicio</a>
+      </article>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>&copy; <span id="anio-actual">2026</span> Club Social y Deportivo Los Algarrobos · Córdoba, Argentina</p>
+      <p class="pie__info" id="info-navegador"></p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+.actividades__filtro { display: flex; align-items: center; gap: .75rem; background: #fff; padding: .75rem 1rem; border-radius: var(--radio); margin-bottom: 1.25rem; flex-wrap: wrap; }
+.actividades__filtro label { font-weight: 600; }
+.actividades__contador { margin-left: auto; color: #666; font-size: .9rem; }

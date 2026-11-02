@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: head('Inicio')}"></head>
+<body>
+
+<header th:replace="~{fragmentos/layout :: encabezado}"></header>
+<div th:replace="~{fragmentos/layout :: mensajes}"></div>
+
+<main class="contenedor">
+  <h1>Panel de secretaría</h1>
+  <p>Hola, Marta. Hoy el club tiene <strong th:text="${cantidadSocios}">0</strong> socios cargados.</p>
+
+  <section class="tarjetas">
+    <article class="tarjeta">
+      <h2>Actividades</h2>
+      <p>Alta, edición y baja de actividades. Cupos disponibles.</p>
+      <a th:href="@{/actividades}" class="boton">Ir a actividades</a>
+    </article>
+    <article class="tarjeta">
+      <h2>Socios</h2>
+      <p>Listado paginado, búsqueda por apellido, alta y edición.</p>
+      <a th:href="@{/socios}" class="boton">Ir a socios</a>
+    </article>
+    <article class="tarjeta">
+      <h2>Inscripciones</h2>
+      <p>Inscribir un socio a una actividad aplicando las reglas RN1 a RN5.</p>
+      <a th:href="@{/inscripciones/nueva}" class="boton boton--primario">Nueva inscripción</a>
+    </article>
+  </section>
+
+  <section>
+    <h2>Ocupación de las actividades</h2>
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>Actividad</th>
+          <th>Cupo máximo</th>
+          <th>Disponible</th>
+          <th>Ocupación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="entrada : ${ocupacion}">
+          <td><a th:href="@{/actividades/{id}/inscriptos(id=${entrada.key.id})}" th:text="${entrada.key.nombre}">Yoga</a></td>
+          <td th:text="${entrada.key.cupoMaximo}">15</td>
+          <td th:text="${entrada.value}" th:classappend="${entrada.value == 0} ? 'texto-error' : ''">1</td>
+          <td>
+            <div class="barra">
+              <div class="barra__relleno"
+                   th:style="'width:' + ${(entrada.key.cupoMaximo - entrada.value) * 100 / entrada.key.cupoMaximo} + '%'"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: pie}"></footer>
+</body>
+</html>

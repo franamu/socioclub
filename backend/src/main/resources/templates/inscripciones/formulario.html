@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: head('Nueva inscripción')}"></head>
+<body>
+
+<header th:replace="~{fragmentos/layout :: encabezado}"></header>
+<div th:replace="~{fragmentos/layout :: mensajes}"></div>
+
+<main class="contenedor contenedor--angosto">
+  <h1>Nueva inscripción</h1>
+  <p>Elegí el socio y la actividad. El sistema aplica las reglas de cupo (RN1), duplicados (RN2),
+    edad (RN3), cuota al día (RN4) y máximo de 3 actividades (RN5).</p>
+
+  <form th:action="@{/inscripciones}" method="post" class="formulario">
+
+    <div class="campo">
+      <label for="socioId">Socio</label>
+      <select id="socioId" name="socioId" required>
+        <option value="">Seleccioná un socio</option>
+        <!-- th:selected marca la opción si llegamos con ?socioId= o si el POST falló -->
+        <option th:each="s : ${socios}"
+                th:value="${s.id}"
+                th:selected="${s.id == socioId}"
+                th:text="${s.nombreCompleto} + ' · DNI ' + ${s.dni} + ' · ' + ${s.edad} + ' años' + (${s.moroso} ? ' · MOROSO' : '')">
+          Gómez, Juan · DNI 30111222 · 41 años
+        </option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="actividadId">Actividad</label>
+      <select id="actividadId" name="actividadId" required>
+        <option value="">Seleccioná una actividad</option>
+        <option th:each="entrada : ${cupos}"
+                th:value="${entrada.key.id}"
+                th:selected="${entrada.key.id == actividadId}"
+                th:text="${entrada.key.nombre} + ' · ' + ${entrada.key.rangoEdades} + ' · cupo disponible: ' + ${entrada.value}">
+          Yoga · 16 a 99 años · cupo disponible: 1
+        </option>
+      </select>
+    </div>
+
+    <div class="acciones">
+      <button type="submit" class="boton boton--primario">Inscribir</button>
+      <a th:href="@{/actividades}" class="boton">Cancelar</a>
+    </div>
+  </form>
+
+  <aside class="ayuda">
+    <h2>Para probar en la demo</h2>
+    <ul>
+      <li><strong>RN1 (cupo):</strong> Yoga tiene 1 lugar: Núñez, Gabriel entra y Herrera, Lucía es rechazada.</li>
+      <li><strong>RN2 (duplicado):</strong> Gómez, Juan ya está en Yoga.</li>
+      <li><strong>RN3 (edad):</strong> Fernández, Valentina (14) en Fútbol infantil (6 a 12).</li>
+      <li><strong>RN4 (moroso):</strong> López, Carlos o Álvarez, Martín en cualquier actividad.</li>
+      <li><strong>RN5 (máximo 3):</strong> Gómez, Juan en Ajedrez.</li>
+    </ul>
+  </aside>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: pie}"></footer>
+</body>
+</html>

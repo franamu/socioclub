@@ -1,0 +1,24 @@
+/* Variables y reset global */
+:root {
+  --verde: #1f6f4a;
+  --verde-oscuro: #15503a;
+  --amarillo: #f2b705;
+  --gris-claro: #f4f4f1;
+  --gris: #cfd3cc;
+  --rojo: #c0392b;
+  --radio: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--gris-claro);
+  color: #222;
+  line-height: 1.5;
+}
+
+h1, h2, h3 { color: var(--verde-oscuro); line-height: 1.2; }
+a { color: var(--verde); }
+code { background: #e9ede9; padding: .1rem .35rem; border-radius: 4px; }

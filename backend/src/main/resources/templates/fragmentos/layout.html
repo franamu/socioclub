@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!--
+  Fragmentos reutilizables. Cada pantalla los incluye con th:replace.
+  Así el encabezado y el pie se escriben una sola vez.
+-->
+
+<head th:fragment="head(titulo)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${titulo} + ' | SocioClub'">SocioClub</title>
+  <link rel="stylesheet" th:href="@{/css/secretaria.css}">
+</head>
+
+<body>
+
+<header th:fragment="encabezado" class="encabezado">
+  <div class="contenedor encabezado__contenido">
+    <a th:href="@{/}" class="logo">SocioClub <small>· Secretaría</small></a>
+    <nav class="navegacion">
+      <ul>
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li><a th:href="@{/actividades}">Actividades</a></li>
+        <li><a th:href="@{/socios}">Socios</a></li>
+        <li><a th:href="@{/inscripciones/nueva}" class="destacado">+ Inscribir</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Mensajes flash (éxito / error) que vienen del controlador tras un redirect -->
+<div th:fragment="mensajes" class="contenedor">
+  <p th:if="${mensaje}" class="alerta alerta--exito" th:text="${mensaje}"></p>
+  <p th:if="${error}" class="alerta alerta--error">
+    <strong th:if="${regla}" th:text="'[' + ${regla} + '] '"></strong>
+    <span th:text="${error}"></span>
+  </p>
+</div>
+
+<footer th:fragment="pie" class="pie">
+  <div class="contenedor">
+    <p>Club Social y Deportivo Los Algarrobos · Sistema interno de secretaría</p>
+    <p class="pie__info">Taller de Construcción de Software · Universidad Siglo 21</p>
+  </div>
+</footer>
+
+</body>
+</html>

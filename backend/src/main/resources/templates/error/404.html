@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: head('No encontrado')}"></head>
+<body>
+
+<header th:replace="~{fragmentos/layout :: encabezado}"></header>
+
+<main class="contenedor contenedor--angosto">
+  <h1>No encontramos lo que buscabas</h1>
+  <p class="alerta alerta--error" th:text="${mensaje} ?: 'El recurso no existe.'">El recurso no existe.</p>
+  <a th:href="@{/}" class="boton boton--primario">Volver al inicio</a>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: pie}"></footer>
+</body>
+</html>

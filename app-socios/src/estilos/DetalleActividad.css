@@ -1,0 +1,8 @@
+.detalle { background: #fff; padding: 1.5rem; border-radius: var(--radio); box-shadow: 0 2px 6px rgba(0,0,0,.08); max-width: 640px; margin: 0 auto; }
+.detalle__volver { display: inline-block; margin-bottom: 1rem; }
+.detalle h1 { margin: .4rem 0 1rem; }
+.detalle__datos { display: grid; grid-template-columns: 150px 1fr; gap: .5rem 1rem; margin: 0 0 1.25rem; }
+.detalle__datos dt { font-weight: 600; color: var(--verde-oscuro); }
+.detalle__datos dd { margin: 0; }
+.detalle__sin-socio { background: #fff8e1; padding: 1rem; border-radius: var(--radio); }
+.detalle__sin-socio p { margin-top: 0; }

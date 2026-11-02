@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: head(${titulo})}"></head>
+<body>
+
+<header th:replace="~{fragmentos/layout :: encabezado}"></header>
+<div th:replace="~{fragmentos/layout :: mensajes}"></div>
+
+<main class="contenedor contenedor--angosto">
+  <h1 th:text="${titulo}">Nuevo socio</h1>
+
+  <form th:object="${socio}"
+        th:action="${socio.id == null} ? @{/socios} : @{/socios/{id}(id=${socio.id})}"
+        method="post" class="formulario">
+
+    <div class="fila">
+      <div class="campo">
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" th:field="*{apellido}" required maxlength="60">
+      </div>
+      <div class="campo">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required maxlength="60">
+      </div>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+        <label for="dni">DNI (7 u 8 dígitos, sin puntos)</label>
+        <input type="text" id="dni" th:field="*{dni}" required pattern="[0-9]{7,8}" inputmode="numeric">
+      </div>
+      <div class="campo">
+        <label for="fechaNacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" required>
+      </div>
+    </div>
+
+    <div class="fila">
+      <div class="campo">
+        <label for="email">Email</label>
+        <input type="email" id="email" th:field="*{email}" maxlength="120">
+      </div>
+      <div class="campo">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" th:field="*{telefono}" maxlength="30">
+      </div>
+    </div>
+
+    <div class="campo">
+      <label for="estadoCuota">Estado de cuota</label>
+      <!-- th:each sobre los valores del enum EstadoCuota -->
+      <select id="estadoCuota" th:field="*{estadoCuota}">
+        <option th:each="e : ${estados}" th:value="${e}" th:text="${e}">AL_DIA</option>
+      </select>
+    </div>
+
+    <div class="acciones">
+      <button type="submit" class="boton boton--primario">Guardar</button>
+      <a th:href="@{/socios}" class="boton">Cancelar</a>
+    </div>
+  </form>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: pie}"></footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: head('Actividades')}"></head>
+<body>
+
+<header th:replace="~{fragmentos/layout :: encabezado}"></header>
+<div th:replace="~{fragmentos/layout :: mensajes}"></div>
+
+<main class="contenedor">
+  <div class="titulo-con-accion">
+    <h1>Actividades</h1>
+    <a th:href="@{/actividades/nueva}" class="boton boton--primario">+ Nueva actividad</a>
+  </div>
+
+  <!-- th:if / th:unless: renderizado condicional -->
+  <p th:if="${#maps.isEmpty(cupos)}" class="vacio">Todavía no hay actividades cargadas.</p>
+
+  <table class="tabla" th:unless="${#maps.isEmpty(cupos)}">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Disciplina</th>
+        <th>Días y horario</th>
+        <th>Edades</th>
+        <th>Profesor/a</th>
+        <th>Cuota</th>
+        <th>Cupo</th>
+        <th>Disponible</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- th:each recorre el Map<Actividad, Integer>: key = actividad, value = cupo disponible -->
+      <tr th:each="entrada : ${cupos}" th:with="a=${entrada.key}, disponible=${entrada.value}">
+        <td th:text="${a.nombre}">Fútbol infantil</td>
+        <td><span class="etiqueta" th:text="${a.disciplina}">Fútbol</span></td>
+        <td th:text="${a.dias} + ' ' + ${a.horario}">Lun y Mié 18:00</td>
+        <td th:text="${a.rangoEdades}">6 a 12 años</td>
+        <td th:text="${a.profesor}">Diego Ferreyra</td>
+        <td th:text="'$ ' + ${#numbers.formatDecimal(a.cuotaMensual, 1, 'POINT', 0, 'COMMA')}">$ 18.000</td>
+        <td th:text="${a.cupoMaximo}">40</td>
+        <td>
+          <span th:if="${disponible > 0}" th:text="${disponible}">38</span>
+          <span th:if="${disponible == 0}" class="etiqueta etiqueta--error">Sin cupo</span>
+        </td>
+        <td class="acciones">
+          <a th:href="@{/actividades/{id}/inscriptos(id=${a.id})}" class="boton boton--chico">Inscriptos</a>
+          <a th:href="@{/actividades/{id}/editar(id=${a.id})}" class="boton boton--chico">Editar</a>
+          <form th:action="@{/actividades/{id}/eliminar(id=${a.id})}" method="post" class="en-linea"
+                onsubmit="return confirm('¿Eliminar la actividad?');">
+            <button type="submit" class="boton boton--chico boton--peligro">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: pie}"></footer>
+</body>
+</html>

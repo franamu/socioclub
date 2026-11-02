@@ -1,0 +1,12 @@
+.mis-actividades__socio { color: #555; }
+.mis-actividades__contenido { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: start; }
+.mis-actividades__lista { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: .75rem; }
+.inscripcion { background: #fff; border-radius: var(--radio); padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+.inscripcion h3 { margin: 0 0 .2rem; }
+.inscripcion p { margin: 0; font-size: .92rem; color: #555; }
+.inscripcion__cuota { font-weight: 600; color: var(--verde-oscuro) !important; }
+.mis-actividades__vacio { background: #fff; padding: 2rem; border-radius: var(--radio); text-align: center; }
+@media (max-width: 700px) {
+  .mis-actividades__contenido { grid-template-columns: 1fr; }
+  .inscripcion { flex-direction: column; align-items: flex-start; }
+}

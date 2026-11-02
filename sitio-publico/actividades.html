@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo de actividades del Club Los Algarrobos: días, horarios, edades, profesores y cuotas.">
+  <title>Club Los Algarrobos | Actividades</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="contenedor encabezado__contenido">
+      <a href="index.html" class="logo" aria-label="Ir al inicio">
+        <img src="img/logo.svg" alt="Escudo del Club Social y Deportivo Los Algarrobos" width="48" height="48">
+        <span>Club Los Algarrobos</span>
+      </a>
+      <nav class="navegacion" aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="actividades.html" class="activo">Actividades</a></li>
+          <li><a href="preinscripcion.html">Preinscripción</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+
+    <section class="seccion">
+      <h1>Actividades</h1>
+      <p>Elegí una disciplina o ingresá tu edad para ver qué actividades podés hacer.</p>
+
+      <!-- Filtros: su lógica está en js/script.js -->
+      <form id="filtros" class="filtros" aria-label="Filtrar actividades">
+        <div class="campo">
+          <label for="filtro-disciplina">Disciplina</label>
+          <select id="filtro-disciplina" name="disciplina">
+            <option value="">Todas</option>
+            <!-- las opciones se generan con JavaScript -->
+          </select>
+        </div>
+        <div class="campo">
+          <label for="filtro-edad">Edad</label>
+          <input type="number" id="filtro-edad" name="edad" min="1" max="99" placeholder="Ej: 10">
+        </div>
+        <button type="button" id="btn-limpiar" class="boton boton--secundario">Limpiar filtros</button>
+      </form>
+
+      <p id="resultado-filtro" class="resultado-filtro" aria-live="polite"></p>
+    </section>
+
+    <section id="catalogo" class="seccion" aria-label="Catálogo de actividades">
+      <!-- las tarjetas se generan con JavaScript a partir del arreglo de objetos Actividad -->
+    </section>
+
+    <aside class="aviso">
+      <h2>¿No encontrás tu edad?</h2>
+      <p>Escribinos a secretaría: estamos armando nuevas comisiones para 2027.</p>
+      <a href="preinscripcion.html" class="boton boton--primario">Dejar preinscripción</a>
+    </aside>
+
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>&copy; <span id="anio-actual">2026</span> Club Social y Deportivo Los Algarrobos · Córdoba, Argentina</p>
+      <p class="pie__info" id="info-navegador"></p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

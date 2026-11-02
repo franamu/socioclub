@@ -1,0 +1,8 @@
+.encabezado { background: var(--verde); color: #fff; position: sticky; top: 0; z-index: 10; }
+.encabezado__contenido { width: min(960px, 94%); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 0; flex-wrap: wrap; }
+.encabezado__logo { color: #fff; text-decoration: none; font-weight: bold; font-size: 1.2rem; }
+.encabezado__logo small { font-weight: normal; opacity: .8; }
+.encabezado__nav { display: flex; gap: .25rem; }
+.encabezado__nav a { color: #fff; text-decoration: none; padding: .4rem .8rem; border-radius: var(--radio); }
+.encabezado__nav a:hover, .encabezado__nav a.active { background: var(--verde-oscuro); }
+.encabezado__socio { display: flex; align-items: center; gap: .6rem; }

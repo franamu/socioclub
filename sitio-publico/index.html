@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Club Social y Deportivo Los Algarrobos - Córdoba. Actividades deportivas y recreativas para toda la familia.">
+  <title>Club Los Algarrobos | Inicio</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="contenedor encabezado__contenido">
+      <a href="index.html" class="logo" aria-label="Ir al inicio">
+        <img src="img/logo.svg" alt="Escudo del Club Social y Deportivo Los Algarrobos" width="48" height="48">
+        <span>Club Los Algarrobos</span>
+      </a>
+      <nav class="navegacion" aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html" class="activo">Inicio</a></li>
+          <li><a href="actividades.html">Actividades</a></li>
+          <li><a href="preinscripcion.html">Preinscripción</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor">
+
+    <section class="portada" id="portada">
+      <h1>Un club de barrio, para todo el barrio</h1>
+      <p class="portada__texto">
+        Desde 1962 en la zona norte de Córdoba. Ocho actividades deportivas y recreativas
+        para chicos y adultos, con profesores de primera y cuotas accesibles.
+      </p>
+      <a href="actividades.html" class="boton boton--primario">Ver actividades</a>
+      <a href="preinscripcion.html" class="boton boton--secundario">Quiero preinscribirme</a>
+    </section>
+
+    <section id="historia" class="seccion">
+      <h2>Nuestra historia</h2>
+      <article>
+        <p>
+          El Club Social y Deportivo Los Algarrobos nació en 1962 cuando un grupo de vecinos
+          decidió transformar un baldío lleno de algarrobos en una cancha de fútbol. Con el
+          tiempo llegaron la pileta, el gimnasio cubierto y el salón de usos múltiples.
+        </p>
+        <p>
+          Hoy somos más de <strong>650 socios</strong> y seguimos con el mismo espíritu:
+          un lugar donde los chicos hacen deporte y los grandes se encuentran.
+        </p>
+      </article>
+    </section>
+
+    <section id="numeros" class="seccion seccion--destacada">
+      <h2>El club en números</h2>
+      <ul class="lista-numeros">
+        <li><span class="numero" data-contador="650">650</span> socios</li>
+        <li><span class="numero" data-contador="8">8</span> actividades</li>
+        <li><span class="numero" data-contador="64">64</span> años de historia</li>
+        <li><span class="numero" data-contador="12">12</span> profesores</li>
+      </ul>
+    </section>
+
+    <section id="ubicacion" class="seccion">
+      <h2>Dónde estamos</h2>
+      <div class="dos-columnas">
+        <article>
+          <h3>Sede principal</h3>
+          <address>
+            Av. Los Algarrobos 1450, B° Villa Cabrera<br>
+            Córdoba Capital (X5009)<br>
+            Tel: <a href="tel:+543514567890">(0351) 456-7890</a><br>
+            Email: <a href="mailto:secretaria@losalgarrobos.com.ar">secretaria@losalgarrobos.com.ar</a>
+          </address>
+          <h3>Horario de secretaría</h3>
+          <ul>
+            <li>Lunes a viernes: 9:00 a 13:00 y 16:00 a 20:00</li>
+            <li>Sábados: 9:00 a 13:00</li>
+          </ul>
+        </article>
+        <aside class="aviso">
+          <h3>¿Cómo asociarse?</h3>
+          <p>Acercate a secretaría con tu DNI o dejá tu preinscripción en la web y te
+            llamamos nosotros.</p>
+          <a href="preinscripcion.html" class="boton boton--primario">Preinscribirme</a>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>&copy; <span id="anio-actual">2026</span> Club Social y Deportivo Los Algarrobos · Córdoba, Argentina</p>
+      <p class="pie__info" id="info-navegador"></p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

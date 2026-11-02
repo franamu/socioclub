@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: head('Ficha del socio')}"></head>
+<body>
+
+<header th:replace="~{fragmentos/layout :: encabezado}"></header>
+<div th:replace="~{fragmentos/layout :: mensajes}"></div>
+
+<main class="contenedor">
+  <a th:href="@{/socios}" class="volver">&larr; Volver a socios</a>
+  <div class="titulo-con-accion">
+    <h1 th:text="${socio.nombreCompleto}">Gómez, Juan</h1>
+    <div>
+      <a th:href="@{/inscripciones/nueva(socioId=${socio.id})}" class="boton boton--primario">+ Inscribir</a>
+      <a th:href="@{/socios/{id}/editar(id=${socio.id})}" class="boton">Editar</a>
+    </div>
+  </div>
+
+  <dl class="ficha">
+    <dt>DNI</dt><dd th:text="${socio.dni}">30111222</dd>
+    <dt>Edad</dt><dd th:text="${socio.edad} + ' años (' + ${#temporals.format(socio.fechaNacimiento, 'dd/MM/yyyy')} + ')'">41 años</dd>
+    <dt>Email</dt><dd th:text="${socio.email} ?: '-'">-</dd>
+    <dt>Teléfono</dt><dd th:text="${socio.telefono} ?: '-'">-</dd>
+    <dt>Cuota</dt>
+    <dd>
+      <span class="etiqueta" th:classappend="${socio.moroso} ? 'etiqueta--error' : 'etiqueta--ok'"
+            th:text="${socio.estadoCuota}">AL_DIA</span>
+      <span th:if="${socio.moroso}" class="texto-error"> · No puede inscribirse a nuevas actividades (RN4)</span>
+    </dd>
+  </dl>
+
+  <h2>Inscripciones activas (<span th:text="${#lists.size(inscripciones)}">0</span> de 3)</h2>
+
+  <p th:if="${#lists.isEmpty(inscripciones)}" class="vacio">El socio no está inscripto en ninguna actividad.</p>
+
+  <table class="tabla" th:unless="${#lists.isEmpty(inscripciones)}">
+    <thead>
+      <tr>
+        <th>Actividad</th>
+        <th>Días y horario</th>
+        <th>Profesor/a</th>
+        <th>Cuota</th>
+        <th>Desde</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="i : ${inscripciones}">
+        <td th:text="${i.actividad.nombre}">Yoga</td>
+        <td th:text="${i.actividad.dias} + ' ' + ${i.actividad.horario}">Mar y Jue 09:00</td>
+        <td th:text="${i.actividad.profesor}">Inés Arguello</td>
+        <td th:text="'$ ' + ${#numbers.formatDecimal(i.actividad.cuotaMensual, 1, 'POINT', 0, 'COMMA')}">$ 17.000</td>
+        <td th:text="${#temporals.format(i.fechaInscripcion, 'dd/MM/yyyy')}">02/03/2026</td>
+        <td>
+          <form th:action="@{/inscripciones/{id}/baja(id=${i.id})}" method="post" class="en-linea"
+                onsubmit="return confirm('¿Dar de baja esta inscripción?');">
+            <input type="hidden" name="volverA" th:value="'/socios/' + ${socio.id}">
+            <button type="submit" class="boton boton--chico boton--peligro">Dar de baja</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: pie}"></footer>
+</body>
+</html>

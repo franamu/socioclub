@@ -1,0 +1,8 @@
+.ingreso { max-width: 560px; margin: 0 auto; }
+.ingreso__form { display: flex; flex-direction: column; gap: .5rem; background: #fff; padding: 1.5rem; border-radius: var(--radio); box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+.ingreso__form label { font-weight: 600; }
+.ingreso__form input { font-size: 1.2rem; letter-spacing: .05em; }
+.ingreso__form .boton { margin-top: .5rem; }
+.ingreso__ayuda { margin-top: 1.5rem; background: #fff8e1; border-left: 5px solid var(--amarillo); padding: 1rem 1.25rem; border-radius: var(--radio); font-size: .92rem; }
+.ingreso__ayuda h2 { margin-top: 0; font-size: 1rem; }
+.ingreso__ayuda ul { padding-left: 1.1rem; margin: 0; }
