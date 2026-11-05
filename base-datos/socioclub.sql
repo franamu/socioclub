@@ -94,9 +94,9 @@ INSERT IGNORE INTO socios (id, dni, nombre, apellido, fecha_nacimiento, email, t
 (20, '44222555', 'Lucía',     'Herrera',   '2003-08-14', 'lucia.herrera@mail.com',    '351-4001020', 'AL_DIA');  -- 23, no está en Yoga (RN1)
 
 -- ---------- Inscripciones ----------
--- Yoga (id 8, cupo 15) queda con 14 activas: 1 lugar libre para demostrar RN1
+-- Yoga (id 8, cupo 15) queda con 14 activas: 1 lugar libre (caso RN1)
 -- (Gabriel Núñez toma el último lugar y Lucía Herrera es rechazada).
--- Juan Gómez (id 1) tiene 3 activas para demostrar RN5.
+-- Juan Gómez (id 1) tiene 3 activas (caso RN5).
 INSERT IGNORE INTO inscripciones (id, socio_id, actividad_id, fecha_inscripcion, estado) VALUES
 -- Yoga: 14 activas
 ( 1,  1, 8, '2026-03-02', 'ACTIVA'),
@@ -133,7 +133,7 @@ INSERT IGNORE INTO inscripciones (id, socio_id, actividad_id, fecha_inscripcion,
 -- Una baja lógica de ejemplo
 (29,  8, 7, '2026-03-20', 'BAJA');     -- Laura se dio de baja de funcional
 
--- ---------- Consultas útiles para la demo ----------
+-- ---------- Consultas de verificación ----------
 -- Cupo disponible por actividad:
 -- SELECT a.nombre, a.cupo_maximo,
 --        a.cupo_maximo - COUNT(i.id) AS disponible

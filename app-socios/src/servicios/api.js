@@ -12,7 +12,7 @@
  */
 import { actividadesLocales, sociosLocales, inscripcionesLocales } from '../datos/datosLocales';
 
-// Copias mutables para que inscribirse / darse de baja "funcionen" en memoria durante la demo
+// Copias mutables para que inscribirse / darse de baja "funcionen" en memoria con los datos locales
 let actividades = actividadesLocales.map((a) => ({ ...a }));
 let inscripciones = inscripcionesLocales.map((i) => ({ ...i }));
 let proximoId = 100;
@@ -65,7 +65,7 @@ export function obtenerInscripcionesDeSocio(socioId) {
 /**
  * POST /api/inscripciones  { socioId, actividadId }
  * Las reglas RN1 a RN5 viven en el backend; acá se simulan solo para que la
- * demo con datos locales muestre los mensajes de error en pantalla.
+ * app con datos locales muestre los mensajes de error en pantalla.
  */
 export function inscribir(socio, actividadId) {
   const actividad = actividades.find((a) => a.id === Number(actividadId));

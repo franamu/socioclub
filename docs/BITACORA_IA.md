@@ -1,15 +1,10 @@
 # Bitácora de uso de IA (Anexo C)
 
-Se completa a lo largo del cuatrimestre y va como último capítulo del informe.
-Mínimo 5 entradas; en al menos 3 tiene que haber un error o ajuste detectado por el grupo.
+Registro del uso de herramientas de IA durante el desarrollo. Va como último capítulo del informe final.
 
 | N.º | Parte | Qué le pedimos a la IA (resumen del prompt) | Qué nos devolvió | Qué estaba mal / qué cambiamos y por qué |
 |-----|-------|----------------------------------------------|------------------|-------------------------------------------|
-| 1 | A, B, D | Le pasamos el enunciado completo y le pedimos que armara el proyecto hasta el hito de la semana 2 (sitio público, backend Spring Boot con Thymeleaf y reglas RN1–RN5, app React con datos locales). | La estructura de carpetas `/sitio-publico`, `/backend`, `/app-socios`, el código de las tres partes, `data.sql`, README y plan de trabajo. | La IA no pudo compilar el backend en su entorno (sin acceso a Maven Central), así que lo compilamos y probamos nosotros con `mvn spring-boot:run` contra MySQL. _(Completar: qué falló al levantarlo, si falló algo.)_ |
-| 2 | B | _(ej.: le pedimos que explicara línea por línea `InscripcionService.inscribir` y por qué RN4 se chequea antes que RN1)_ | | |
-| 3 | D | _(ej.: le preguntamos por qué el socio está en un contexto y no en props)_ | | |
-| 4 | | | | |
-| 5 | | | | |
+| 1 | A, B, D | Le pasamos el enunciado completo y le pedimos que armara el proyecto hasta el hito de la semana 2 (sitio público, backend Spring Boot con Thymeleaf y reglas RN1–RN5, app React con datos locales). | La estructura de carpetas `/sitio-publico`, `/backend`, `/app-socios`, el código de las tres partes, `data.sql`, README y plan de trabajo. | La IA no pudo compilar el backend en su entorno, así que lo levantamos nosotros. Al hacerlo aparecieron tres problemas que el código generado no contemplaba: Maven tomaba un JDK más nuevo que el soportado por Spring Boot 3.3 (se resolvió fijando `JAVA_HOME` a un JDK 17-23), el MySQL local no arrancaba (se reemplazó por un contenedor Docker) y el puerto 3000 estaba ocupado (la app React corre con `PORT=3001`). El README se actualizó con esos pasos. |
 
 ## Decisiones tomadas frente a sugerencias de la IA
 

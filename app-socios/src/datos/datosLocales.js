@@ -16,7 +16,7 @@ export const actividadesLocales = [
   { id: 5, nombre: 'Patín artístico',   disciplina: 'Patín',     dias: 'Mié y Vie',      horario: '17:30', edadMinima: 5,  edadMaxima: 15, cupoMaximo: 25, cupoDisponible: 24, cuotaMensual: 21000, profesor: 'Carla Peralta' },
   { id: 6, nombre: 'Ajedrez',           disciplina: 'Ajedrez',   dias: 'Sáb',            horario: '10:00', edadMinima: 8,  edadMaxima: 99, cupoMaximo: 16, cupoDisponible: 14, cuotaMensual: 9000,  profesor: 'Raúl Giménez' },
   { id: 7, nombre: 'Funcional adultos', disciplina: 'Fitness',   dias: 'Lun, Mié y Vie', horario: '20:30', edadMinima: 18, edadMaxima: 65, cupoMaximo: 30, cupoDisponible: 28, cuotaMensual: 22000, profesor: 'Paula Luna' },
-  // Yoga queda SIN CUPO para probar la etiqueta "Sin cupo" y el botón deshabilitado
+  // Yoga queda SIN CUPO así se muestra la etiqueta "Sin cupo" y el botón deshabilitado
   { id: 8, nombre: 'Yoga',              disciplina: 'Bienestar', dias: 'Mar y Jue',      horario: '09:00', edadMinima: 16, edadMaxima: 99, cupoMaximo: 15, cupoDisponible: 0,  cuotaMensual: 17000, profesor: 'Inés Arguello' }
 ];
 
@@ -43,5 +43,5 @@ export const inscripcionesLocales = [
   { id: 18, socioId: 3, estado: 'ACTIVA', fechaInscripcion: '2026-03-12', actividad: actividadesLocales[3] }, // Lucas - Natación
   { id: 3,  socioId: 5, estado: 'ACTIVA', fechaInscripcion: '2026-03-03', actividad: actividadesLocales[7] }, // Carlos - Yoga
   { id: 10, socioId: 14, estado: 'ACTIVA', fechaInscripcion: '2026-03-06', actividad: actividadesLocales[7] } // Camila - Yoga
-  // Mariana Acosta (id 18) no tiene actividades: sirve para probar el mensaje "sin actividades"
+  // Mariana Acosta (id 18) no tiene actividades: muestra el mensaje "sin actividades"
 ];

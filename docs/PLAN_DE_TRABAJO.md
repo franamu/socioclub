@@ -45,24 +45,24 @@ Nuestro grupo expone en la **semana 2**, así que el hito a cumplir es:
 
 | # | Tarea | Parte | Responsable | Entregable |
 |---|-------|-------|-------------|------------|
-| 1 | `ActividadRestController`, `SocioRestController`, `InscripcionRestController` bajo `/api` reutilizando los servicios existentes | C | _(nombre)_ | Endpoints del Anexo A |
-| 2 | `@RestControllerAdvice` que traduzca `ReglaDeNegocioException` → **409** `{ "error", "regla" }` y `RecursoNoEncontradoException` → **404** | C | _(nombre)_ | JSON de error |
-| 3 | Resolver el ciclo Socio ↔ Inscripcion en JSON (`@JsonIgnore` en las listas `inscripciones` o DTOs) y documentar la decisión | C | _(nombre)_ | Respuesta JSON sin ciclo |
-| 4 | Configurar CORS para `http://localhost:3000` (`WebMvcConfigurer` en `config/`) | C | _(nombre)_ | Clase `ConfiguracionCors` |
-| 5 | Colección Postman con todos los endpoints + 5 casos de error (RN1–RN5) | C/E | _(nombre)_ | `docs/SocioClub.postman_collection.json` |
-| 6 | Reemplazar el cuerpo de `src/servicios/api.js` por Axios (`npm install axios`) | D | _(nombre)_ | Ingreso, inscripción y baja reales |
-| 7 | Quitar la simulación de reglas de `api.js`: el 409 lo devuelve el backend | D | _(nombre)_ | — |
-| 8 | Pruebas de componente con React Testing Library sobre `TarjetaActividad` (nombre visible; cupo 0 → "Sin cupo" y botón deshabilitado) | E | _(nombre)_ | `TarjetaActividad.test.js` |
+| 1 | `ActividadRestController`, `SocioRestController`, `InscripcionRestController` bajo `/api` reutilizando los servicios existentes | C |  | Endpoints del Anexo A |
+| 2 | `@RestControllerAdvice` que traduzca `ReglaDeNegocioException` → **409** `{ "error", "regla" }` y `RecursoNoEncontradoException` → **404** | C |  | JSON de error |
+| 3 | Resolver el ciclo Socio ↔ Inscripcion en JSON (`@JsonIgnore` en las listas `inscripciones` o DTOs) y documentar la decisión | C |  | Respuesta JSON sin ciclo |
+| 4 | Configurar CORS para `http://localhost:3000` (`WebMvcConfigurer` en `config/`) | C |  | Clase `ConfiguracionCors` |
+| 5 | Colección Postman con todos los endpoints + 5 casos de error (RN1–RN5) | C/E |  | `docs/SocioClub.postman_collection.json` |
+| 6 | Reemplazar el cuerpo de `src/servicios/api.js` por Axios (`npm install axios`) | D |  | Ingreso, inscripción y baja reales |
+| 7 | Quitar la simulación de reglas de `api.js`: el 409 lo devuelve el backend | D |  | — |
+| 8 | Pruebas de componente con React Testing Library sobre `TarjetaActividad` (nombre visible; cupo 0 → "Sin cupo" y botón deshabilitado) | E |  | `TarjetaActividad.test.js` |
 
 ### Entrega final — objetivo: 100 %
 
 | # | Tarea | Parte | Responsable |
 |---|-------|-------|-------------|
-| 9  | Prueba de sistema: tabla con 6 casos punta a punta (1 exitoso + uno por RN1–RN5) | E | _(nombre)_ |
+| 9  | Prueba de sistema: tabla con 6 casos punta a punta (1 exitoso + uno por RN1–RN5) | E |  |
 | 10 | Informe técnico PDF (8–12 páginas): solución, diagrama de arquitectura, modelo de datos, tabla de endpoints, capturas, resultados de pruebas, conclusiones | F | todos |
 | 11 | Bitácora de IA (Anexo C): mínimo 5 entradas, 3 con correcciones detectadas por el grupo | F | todos |
 | 12 | Incorporar devoluciones del docente de la exposición | — | todos |
-| 13 | Repositorio GitHub con commits de todos los integrantes; README actualizado | F | _(nombre)_ |
+| 13 | Repositorio GitHub con commits de todos los integrantes; README actualizado | F |  |
 
 ## Riesgos que ya identificamos
 
@@ -72,21 +72,3 @@ Nuestro grupo expone en la **semana 2**, así que el hito a cumplir es:
 - **LazyInitializationException** en la API: `Inscripcion.socio` y `.actividad` son `LAZY`. En
   Thymeleaf funciona porque `open-in-view=true`; en REST conviene usar las `@Query` con
   `JOIN FETCH` que ya están en `InscripcionRepository`.
-- **Cambio en vivo que puede pedir el docente**: "máximo 4 actividades" → una sola constante
-  `MAXIMO_ACTIVIDADES_POR_SOCIO` en `InscripcionService`; "agregar un dato a la tarjeta" →
-  `TarjetaActividad.js` + su `propTypes`.
-
-## Guion de la demo (7 minutos)
-
-1. **Sitio público** (1 min): filtro por edad 10 → quedan 4 tarjetas; formulario con DNI con
-   puntos → error junto al campo; botón Volver (`history.back()`).
-2. **Secretaría** (4 min):
-   - `/actividades`: cupos; editar cupo de Yoga y volver.
-   - `/socios?apellido=gom`: búsqueda + paginación (20 socios, 10 por página).
-   - `/inscripciones/nueva`: Valentina Fernández → Fútbol infantil ⇒ **RN3**;
-     Carlos López → Ajedrez ⇒ **RN4**; Juan Gómez → Ajedrez ⇒ **RN5**; Juan Gómez → Yoga ⇒ **RN2**;
-     Gabriel Núñez → Yoga (entra, queda cupo 0); Lucía Herrera → Yoga ⇒ **RN1**.
-   - `/actividades/8/inscriptos`: ver los 15 inscriptos y dar de baja uno (baja lógica).
-3. **App React** (2 min): ingresar con `30111222`; Mis actividades con cuota 15 % de
-   descuento; catálogo con Yoga en gris "Sin cupo"; detalle de Ajedrez → Inscribirme ⇒ RN5;
-   darse de baja de Yoga → la cuota se recalcula sola (estado → re-render).

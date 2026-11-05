@@ -17,14 +17,11 @@ una sola base MySQL y un solo backend Spring Boot:
 
 | Nombre | Parte a cargo |
 |--------|---------------|
-| _(completar)_ | Parte A — Sitio público |
-| _(completar)_ | Parte B — Backend / Thymeleaf |
-| _(completar)_ | Parte B — Reglas de negocio / JPA |
-| _(completar)_ | Parte D — App React |
-| _(completar)_ | Parte C/E — API REST y pruebas |
-
-> Regla del grupo: todos tienen que poder explicar cualquier parte. Antes de la exposición, cada
-> uno le explica su parte a otro integrante sin mirar el código.
+|  | Parte A — Sitio público |
+| Francisco Amuchástegui | Parte B — Backend / Thymeleaf (expone esta parte) |
+|  | Parte B — Reglas de negocio / JPA |
+|  | Parte D — App React |
+|  | Parte C/E — API REST y pruebas |
 
 ---
 
@@ -65,7 +62,7 @@ mysql -u root -p < base-datos/socioclub.sql
 ```
 
 Los datos iniciales se cargan con `INSERT IGNORE`: si la fila ya existe no se vuelve a insertar,
-así que reiniciar el backend **no** deshace las inscripciones hechas en una demo. Para volver al
+así que reiniciar el backend **no** deshace las inscripciones que se hayan cargado. Para volver al
 estado inicial (Yoga con 1 lugar libre) borrá la base y dejá que el backend la cree de nuevo:
 
 ```bash
@@ -132,8 +129,8 @@ npm start
 Abrir <http://localhost:3000>. Si el puerto 3000 está ocupado por otro programa, arrancarla en
 otro puerto con `PORT=3001 npm start` (en Windows: `set PORT=3001 && npm start`).
 
-> El socio que ingresó vive en un contexto de React en memoria: si se recarga la página o se
-> escribe una URL a mano, la app vuelve al ingreso. En la demo, navegar siempre con los links.
+> El socio que ingresó se guarda en un contexto de React en memoria: si se recarga la página o
+> se escribe una URL a mano, la app vuelve a la pantalla de ingreso.
 
 En esta etapa (semana 2) la app trabaja con **datos locales**
 (`src/datos/datosLocales.js`) a través de `src/servicios/api.js`; en la semana 3 ese archivo
@@ -149,22 +146,22 @@ CI=true npm test -- --watchAll=false
 
 No hay contraseñas: el socio ingresa a la app solo con su DNI (RF8).
 
-| DNI        | Socio               | Edad | Cuota   | Para probar                                          |
+| DNI        | Socio               | Edad | Cuota   | Caso que cubre                                       |
 |------------|---------------------|------|---------|------------------------------------------------------|
 | `30111222` | Juan Gómez          | 41   | AL_DIA  | Tiene 3 actividades → **RN5** y **RN2** (ya está en Yoga) |
 | `34222333` | María Pérez         | 36   | AL_DIA  | 2 actividades → bonificación 10 % (RN6)              |
 | `55333444` | Lucas Rodríguez     | 10   | AL_DIA  | Fútbol infantil y natación                           |
-| `52444555` | Valentina Fernández | 14   | AL_DIA  | Inscribirla en Fútbol infantil (6 a 12) → **RN3**    |
+| `52444555` | Valentina Fernández | 14   | AL_DIA  | Fuera del rango de Fútbol infantil (6 a 12) → **RN3** |
 | `26555666` | Carlos López        | 47   | MOROSO  | Cualquier inscripción → **RN4**                      |
 | `33222444` | Martín Álvarez      | 38   | MOROSO  | Cualquier inscripción → **RN4**                      |
-| `12666888` | Roberto Suárez      | 67   | AL_DIA  | Inscribirlo en Funcional (18 a 65) → **RN3**         |
+| `12666888` | Roberto Suárez      | 67   | AL_DIA  | Fuera del rango de Funcional (18 a 65) → **RN3**     |
 | `47999222` | Mariana Acosta      | 20   | AL_DIA  | Sin actividades → mensaje "sin actividades"          |
 | `39111444` | Gabriel Núñez       | 29   | AL_DIA  | Toma el último lugar de Yoga                         |
-| `44222555` | Lucía Herrera       | 23   | AL_DIA  | Después de Gabriel, Yoga → **RN1**                   |
+| `44222555` | Lucía Herrera       | 23   | AL_DIA  | Con Yoga sin cupo → **RN1**                          |
 
-**Yoga** arranca con 14 inscriptos activos de 15: queda **1 lugar**. Inscribí a Gabriel Núñez
-(entra y el cupo queda en 0) y después a Lucía Herrera: salta **RN1**. Todos los demás adultos
-ya están en Yoga, así que con ellos salta RN2.
+**Yoga** arranca con 14 inscriptos activos de 15: queda **1 lugar**. Al inscribir a Gabriel Núñez
+el cupo queda en 0 y la siguiente inscripción (por ejemplo Lucía Herrera) es rechazada por **RN1**.
+Los demás adultos ya están en Yoga, por lo que con ellos aplica RN2.
 
 ## 7. Reglas de negocio y dónde están
 
