@@ -42,4 +42,7 @@ public interface InscripcionRepository extends JpaRepository<Inscripcion, Long> 
 
     /** Cantidad de inscripciones activas de una actividad (versión derivada, equivalente a la @Query). */
     long countByActividadIdAndEstado(Long actividadId, EstadoInscripcion estado);
+
+    /** Todas las inscripciones de una actividad, activas o dadas de baja (historial). */
+    long countByActividadId(Long actividadId);
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/layout :: head('Operación no realizada')}"></head>
+<body>
+
+<header th:replace="~{fragmentos/layout :: encabezado}"></header>
+
+<main class="contenedor contenedor--angosto">
+  <h1>No se pudo completar la operación</h1>
+  <p class="alerta alerta--error" th:text="${mensaje}">La operación no se puede realizar.</p>
+  <a th:href="@{/}" class="boton boton--primario">Volver al inicio</a>
+</main>
+
+<footer th:replace="~{fragmentos/layout :: pie}"></footer>
+</body>
+</html>

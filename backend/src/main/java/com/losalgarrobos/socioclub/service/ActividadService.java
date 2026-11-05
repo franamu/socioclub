@@ -82,8 +82,10 @@ public class ActividadService {
     }
 
     /**
-     * Baja de una actividad. Solo se permite si no tiene inscriptos activos;
-     * de lo contrario se rechaza (en la API será 409).
+     * Baja de una actividad. Solo se permite si nunca tuvo inscripciones.
+     * Las bajas de socios son lógicas (la fila queda con estado BAJA), así que
+     * una actividad con historial no se puede borrar sin perder ese registro:
+     * la clave foránea de inscripciones.actividad_id lo impide.
      */
     @Transactional
     public void eliminar(Long id) {
@@ -92,6 +94,12 @@ public class ActividadService {
         if (activas > 0) {
             throw new ReglaDeNegocioException("BAJA",
                     "No se puede eliminar: la actividad tiene " + activas + " inscripto(s) activo(s)");
+        }
+        long historicas = inscripcionRepository.countByActividadId(id);
+        if (historicas > 0) {
+            throw new ReglaDeNegocioException("BAJA",
+                    "No se puede eliminar: la actividad tiene historial de " + historicas
+                            + " inscripción(es). Se conserva el registro.");
         }
         actividadRepository.delete(actividad);
     }
