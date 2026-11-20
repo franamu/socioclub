@@ -20,8 +20,8 @@ una sola base MySQL y un solo backend Spring Boot:
 |  | Parte A — Sitio público |
 | Francisco Amuchástegui | Parte B — Backend / Thymeleaf (expone esta parte) |
 |  | Parte B — Reglas de negocio / JPA |
-|  | Parte D — App React |
-|  | Parte C/E — API REST y pruebas |
+| Thiago Facchin Mendonca | Parte D — App React |
+| Thiago Facchin Mendonca | Parte C/E — API REST y pruebas |
 
 ---
 
