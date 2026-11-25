@@ -77,7 +77,7 @@ function Ingreso() {
           <li><code>34222333</code> María Pérez · 2 actividades</li>
           <li><code>55333444</code> Lucas Rodríguez · 10 años</li>
           <li><code>26555666</code> Carlos López · MOROSO</li>
-          <li><code>47999222</code> Mariana Acosta · sin actividades</li>
+          <li><code>44222555</code> Lucía Herrera · sin actividades</li>
         </ul>
       </aside>
     </section>

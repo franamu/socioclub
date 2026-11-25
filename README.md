@@ -5,21 +5,21 @@ Trabajo Práctico Integrador · Taller de Construcción de Software · Universid
 Sistema web de gestión de socios, actividades e inscripciones con tres caras que comparten
 una sola base MySQL y un solo backend Spring Boot:
 
-| Carpeta           | Qué es                                   | Tecnología                                   | Estado (semana 2) |
-|-------------------|------------------------------------------|----------------------------------------------|-------------------|
+| Carpeta           | Qué es                                   | Tecnología                                   | Estado (entrega final) |
+|-------------------|------------------------------------------|----------------------------------------------|------------------------|
 | `/sitio-publico`  | Sitio público del club (Parte A)         | HTML5 · CSS3 · JavaScript                    | ✅ Completo        |
-| `/backend`        | Sistema de secretaría (Parte B) + API (C)| Spring Boot · Thymeleaf · JPA · MySQL        | ✅ Parte B completa · Parte C pendiente |
-| `/app-socios`     | App "Mi Club" para socios (Parte D)      | React · React Router                         | 🟡 Rutas y componentes con datos locales |
-| `/base-datos`     | Script de creación y datos iniciales     | SQL                                          | ✅                 |
-| `/docs`           | Plan de trabajo, capturas, informe       | Markdown / PDF                               | 🟡 Plan de trabajo |
+| `/backend`        | Sistema de secretaría (Parte B) + API (C)| Spring Boot · Thymeleaf · JPA · MySQL        | ✅ Partes B y C completas |
+| `/app-socios`     | App "Mi Club" para socios (Parte D)      | React · React Router                         | ✅ Completa, conectada a la API con Axios |
+| `/base-datos`     | Script de creación y datos iniciales     | SQL                                          | ✅ Completo        |
+| `/docs`           | Plan de trabajo, capturas                | Markdown / PDF                               | ✅ Completo        |
 
 ## Integrantes
 
 | Nombre | Parte a cargo |
 |--------|---------------|
-|  | Parte A — Sitio público |
+| Julián Cappellari | Parte A — Sitio público |
 | Francisco Amuchástegui | Parte B — Backend / Thymeleaf (expone esta parte) |
-|  | Parte B — Reglas de negocio / JPA |
+| Tomás Murat | Parte B — Reglas de negocio / JPA |
 | Thiago Facchin Mendonca | Parte D — App React |
 | Thiago Facchin Mendonca | Parte C/E — API REST y pruebas |
 
@@ -70,6 +70,10 @@ mysql -u root -proot -e "DROP DATABASE socioclub;"
 ```
 
 (con Docker: `docker exec socioclub-mysql mysql -uroot -proot -e "DROP DATABASE socioclub;"`).
+
+> **En PowerShell:** si indicás el host, escribilo entre comillas: `mysql -u root -proot "-h127.0.0.1" -e "DROP DATABASE socioclub;"`.
+> Sin comillas, PowerShell corta `-h127.0.0.1` en el primer punto y `mysql` falla con
+> `Unknown MySQL server host '127'`, sin borrar la base.
 
 En ambos casos, si tu usuario/clave de MySQL no es `root`/`root`, editá
 `backend/src/main/resources/application.properties`:
@@ -127,20 +131,27 @@ npm start
 ```
 
 Abrir <http://localhost:3000>. Si el puerto 3000 está ocupado por otro programa, arrancarla en
-otro puerto con `PORT=3001 npm start` (en Windows: `set PORT=3001 && npm start`).
+otro puerto con `PORT=3001 npm start` (en Windows: `set PORT=3001 && npm start`;
+en PowerShell: `$env:PORT=3001; npm start`).
 
 > El socio que ingresó se guarda en un contexto de React en memoria: si se recarga la página o
 > se escribe una URL a mano, la app vuelve a la pantalla de ingreso.
 
-En esta etapa (semana 2) la app trabaja con **datos locales**
-(`src/datos/datosLocales.js`) a través de `src/servicios/api.js`; en la semana 3 ese archivo
-pasa a usar Axios contra `http://localhost:8080/api` sin tocar los componentes.
+La app consume la API REST del backend en `http://localhost:8080/api` (ver sección 10). Todas las
+llamadas están en `src/servicios/api.js`, hechas con Axios.
 
-Pruebas con Jest (una sola corrida, sin modo interactivo):
+Orden de arranque: **MySQL → backend → app**. Si el backend está apagado, la app muestra
+"No se pudo conectar con el servidor. Verificá que el backend esté levantado.".
+
+Pruebas (una sola corrida, sin modo interactivo): Jest sobre las funciones puras `calcularCuotaMensual`
+y `esDniValido`, y React Testing Library sobre el componente `TarjetaActividad`. No necesitan el backend.
 
 ```bash
 CI=true npm test -- --watchAll=false
 ```
+
+(en PowerShell: `$env:CI='true'; npm test -- --watchAll=false`). Las pruebas del backend se corren con
+`mvn test` (ver sección 3).
 
 ## 6. Usuarios / DNI de prueba
 
@@ -155,9 +166,8 @@ No hay contraseñas: el socio ingresa a la app solo con su DNI (RF8).
 | `26555666` | Carlos López        | 47   | MOROSO  | Cualquier inscripción → **RN4**                      |
 | `33222444` | Martín Álvarez      | 38   | MOROSO  | Cualquier inscripción → **RN4**                      |
 | `12666888` | Roberto Suárez      | 67   | AL_DIA  | Fuera del rango de Funcional (18 a 65) → **RN3**     |
-| `47999222` | Mariana Acosta      | 20   | AL_DIA  | Sin actividades → mensaje "sin actividades"          |
 | `39111444` | Gabriel Núñez       | 29   | AL_DIA  | Toma el último lugar de Yoga                         |
-| `44222555` | Lucía Herrera       | 23   | AL_DIA  | Con Yoga sin cupo → **RN1**                          |
+| `44222555` | Lucía Herrera       | 23   | AL_DIA  | Sin actividades → mensaje "sin actividades". Con Yoga sin cupo → **RN1** |
 
 **Yoga** arranca con 14 inscriptos activos de 15: queda **1 lugar**. Al inscribir a Gabriel Núñez
 el cupo queda en 0 y la siguiente inscripción (por ejemplo Lucía Herrera) es rechazada por **RN1**.
@@ -175,8 +185,8 @@ Los demás adultos ya están en Yoga, por lo que con ellos aplica RN2.
 | RN6   | Bonificación 10 % / 15 %                     | `app-socios/src/utils/cuota.js` (probada con Jest)                 |
 | RN7   | DNI de 7 u 8 dígitos                         | `sitio-publico/js/script.js` y `app-socios/src/utils/dni.js`       |
 
-Las reglas RN1 a RN5 están **solo en la capa de servicio**: el controlador Thymeleaf y, en la
-semana 3, el controlador REST llaman al mismo `InscripcionService`.
+Las reglas RN1 a RN5 están **solo en la capa de servicio**: el controlador Thymeleaf y el
+controlador REST llaman al mismo `InscripcionService`.
 
 ## 8. Estructura del backend
 
@@ -186,7 +196,10 @@ backend/src/main/java/com/losalgarrobos/socioclub/
 ├── model/          Socio, Actividad, Inscripcion, EstadoCuota, EstadoInscripcion   (entidades JPA)
 ├── repository/     SocioRepository, ActividadRepository, InscripcionRepository     (JpaRepository)
 ├── service/        SocioService, ActividadService, InscripcionService (RN1-RN5), excepciones
-└── controller/     HomeController, ActividadController, SocioController, InscripcionController
+├── controller/     HomeController, ActividadController, SocioController, InscripcionController, ManejadorErroresMvc
+│   └── api/        ActividadRestController, SocioRestController, InscripcionRestController,
+│                   SolicitudInscripcion, ManejadorErroresApi                       (API REST, JSON)
+└── config/         ConfiguracionCors
 backend/src/main/resources/
 ├── application.properties
 ├── data.sql                       datos iniciales (sección 3.3)
@@ -197,3 +210,38 @@ backend/src/main/resources/
 ## 9. Plan de trabajo
 
 Ver [`docs/PLAN_DE_TRABAJO.md`](docs/PLAN_DE_TRABAJO.md).
+
+## 10. API REST
+
+Base: `http://localhost:8080/api`. Recibe y devuelve JSON, y usa los mismos servicios que la secretaría.
+
+| Verbo  | Ruta                           | Qué hace                                              | Respuestas      |
+|--------|--------------------------------|-------------------------------------------------------|-----------------|
+| GET    | `/actividades[?disciplina=]`   | Lista las actividades con `cupoDisponible`            | 200             |
+| GET    | `/actividades/{id}`            | Detalle de una actividad                              | 200 / 404       |
+| POST   | `/actividades`                 | Crea una actividad                                    | 201 / 400       |
+| PUT    | `/actividades/{id}`            | Modifica una actividad                                | 200 / 400 / 404 |
+| DELETE | `/actividades/{id}`            | Elimina una actividad que nunca tuvo inscripciones    | 204 / 404 / 409 |
+| GET    | `/socios/dni/{dni}`            | Busca un socio por DNI                                | 200 / 404       |
+| GET    | `/socios/{id}/inscripciones`   | Inscripciones activas del socio, con su actividad     | 200 / 404       |
+| POST   | `/inscripciones`               | Inscribe: `{ "socioId": 3, "actividadId": 1 }`        | 201 / 400 / 404 / 409 |
+| PUT    | `/inscripciones/{id}/baja`     | Baja lógica de una inscripción                        | 200 / 404 / 409 |
+
+Los errores también son JSON: `{ "error": "..." }`. Cuando rechaza una regla de negocio (409) se agrega
+cuál fue: `{ "error": "La actividad no tiene cupo disponible", "regla": "RN1" }`. Las bajas y
+eliminaciones no permitidas usan `"regla": "BAJA"`. Un id que no es un número responde 400.
+
+**CORS.** La app (`localhost:3000`) y el backend (`localhost:8080`) son orígenes distintos porque cambia
+el puerto, y el navegador bloquea las respuestas de otro origen si el servidor no las autoriza.
+`config/ConfiguracionCors` autoriza para `/api/**` a `http://localhost:3000` y `http://localhost:3001`
+con GET, POST, PUT, DELETE y OPTIONS. Si la app corre en otro puerto, hay que agregarlo ahí.
+
+**Colección de Postman.** `docs/SocioClub.postman_collection.json` prueba todos los endpoints, incluidos
+los casos de error RN1 a RN5:
+
+1. Resetear la base (ver sección 2) y levantar el backend. Es necesario porque la colección espera los
+   datos iniciales, con 1 lugar libre en Yoga.
+2. En Postman: **Import** → elegir `docs/SocioClub.postman_collection.json`.
+3. En la colección: **⋯ → Run collection** → **Run**, sin cambiar el orden de las requests.
+
+También se puede correr por consola: `npx newman run docs/SocioClub.postman_collection.json`.
