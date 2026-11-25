@@ -38,11 +38,12 @@ function DetalleActividad() {
     setMensaje('');
     setEnviando(true);
     try {
-      // Recorrido completo (semana 3): clic -> Axios -> controlador REST -> servicio -> repositorio -> MySQL
+      // Recorrido completo: clic -> Axios -> controlador REST -> servicio -> repositorio -> MySQL
       await inscribir(socio, actividad.id);
       setMensaje(`¡Listo! Quedaste inscripto/a en ${actividad.nombre}.`);
-      // Refrescamos el cupo que se muestra en pantalla
-      setActividad({ ...actividad, cupoDisponible: actividad.cupoDisponible - 1 });
+      // Pedimos de nuevo la actividad para mostrar el cupo real: restar 1 a mano estaría mal
+      // si otra persona se anotó o se dio de baja mientras tanto
+      setActividad(await obtenerActividad(id));
     } catch (e) {
       // Mensaje de la regla de negocio (409) visible para el socio
       setError(mensajeDeError(e));

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { formatearPesos } from '../utils/cuota';
 import '../estilos/TarjetaActividad.css';
 
@@ -35,25 +34,14 @@ function TarjetaActividad({ actividad, onVerDetalle }) {
         <span className="etiqueta">{actividad.cupoDisponible} lugares disponibles</span>
       )}
 
-      {onVerDetalle ? (
-        <button
-          type="button"
-          className="boton boton--primario"
-          disabled={sinCupo}
-          onClick={() => onVerDetalle(actividad.id)}
-        >
-          Ver detalle
-        </button>
-      ) : (
-        <Link
-          to={`/actividades/${actividad.id}`}
-          className={sinCupo ? 'boton boton--primario boton--deshabilitado' : 'boton boton--primario'}
-          aria-disabled={sinCupo}
-          onClick={(e) => sinCupo && e.preventDefault()}
-        >
-          Ver detalle
-        </Link>
-      )}
+      <button
+        type="button"
+        className="boton boton--primario"
+        disabled={sinCupo}
+        onClick={() => onVerDetalle(actividad.id)}
+      >
+        Ver detalle
+      </button>
     </article>
   );
 }
@@ -73,7 +61,7 @@ TarjetaActividad.propTypes = {
     cuotaMensual: PropTypes.number.isRequired,
     profesor: PropTypes.string.isRequired
   }).isRequired,
-  onVerDetalle: PropTypes.func
+  onVerDetalle: PropTypes.func.isRequired
 };
 
 export default TarjetaActividad;
