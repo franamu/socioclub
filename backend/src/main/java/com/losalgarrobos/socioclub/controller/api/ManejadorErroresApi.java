@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,6 +43,17 @@ public class ManejadorErroresApi {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, String>> datosInvalidos(IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(cuerpoDeError(e.getMessage()));
+    }
+
+    /**
+     * La URL trae un texto donde va un número (por ejemplo /api/actividades/abc).
+     * Spring falla al convertirlo a Long antes de entrar al controlador. Sin este método la
+     * tomaría datosInvalidos (su causa es un IllegalArgumentException), con el mensaje de Java en inglés.
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Map<String, String>> idNoNumerico(MethodArgumentTypeMismatchException e) {
+        return ResponseEntity.badRequest().body(cuerpoDeError(
+                "El valor '" + e.getValue() + "' no es válido para '" + e.getName() + "': debe ser un número"));
     }
 
     /** La base rechazó la operación. No se devuelve e.getMessage() porque expone el SQL. */
