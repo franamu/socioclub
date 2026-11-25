@@ -59,6 +59,34 @@ public class ActividadService {
         return (int) Math.max(0, actividad.getCupoMaximo() - activas);
     }
 
+    // ---- Consultas para la API REST: la actividad viaja en el JSON con su cupo ya calculado ----
+
+    /** Actividades (todas o de una disciplina) con su cupo disponible. */
+    @Transactional(readOnly = true)
+    public List<Actividad> listarConCupo(String disciplina) {
+        List<Actividad> actividades = listarPorDisciplina(disciplina);
+        for (Actividad a : actividades) {
+            completarCupo(a);
+        }
+        return actividades;
+    }
+
+    /** Una actividad con su cupo disponible (404 si no existe). */
+    @Transactional(readOnly = true)
+    public Actividad buscarConCupo(Long id) {
+        return completarCupo(buscarPorId(id));
+    }
+
+    /**
+     * Carga en la actividad el cupo calculado. Es público porque la API también lo usa con las
+     * actividades que ya tiene en la mano (recién guardadas o embebidas en una inscripción).
+     */
+    @Transactional(readOnly = true)
+    public Actividad completarCupo(Actividad actividad) {
+        actividad.setCupoDisponible(cupoDisponible(actividad));
+        return actividad;
+    }
+
     @Transactional
     public Actividad guardar(Actividad actividad) {
         validar(actividad);

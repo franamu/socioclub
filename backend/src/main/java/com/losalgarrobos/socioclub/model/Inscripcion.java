@@ -1,5 +1,6 @@
 package com.losalgarrobos.socioclub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,6 +20,10 @@ import java.time.LocalDate;
  * Es la tabla intermedia entre socios y actividades, pero con atributos propios
  * (fecha y estado), por eso se modela como entidad y no como @ManyToMany.
  */
+// Igual que en Socio y Actividad: si Hibernate entrega un proxy, Jackson ignora sus propiedades internas.
+// Acá no va @JsonIgnore en "socio" ni en "actividad": la app necesita la actividad embebida, y el
+// ciclo ya se corta en las listas "inscripciones" de las otras dos entidades.
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "inscripciones")
 public class Inscripcion {

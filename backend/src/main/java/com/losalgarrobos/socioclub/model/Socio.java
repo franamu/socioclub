@@ -1,5 +1,7 @@
 package com.losalgarrobos.socioclub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +23,9 @@ import java.util.List;
  * Entidad JPA: cada objeto Socio se corresponde con una fila de la tabla "socios".
  * Hibernate (el ORM) traduce los atributos a columnas y las relaciones a claves foráneas.
  */
+// Inscripcion.socio es LAZY: puede llegar como proxy de Hibernate, que agrega estas dos
+// propiedades internas. Se ignoran porque Jackson no sabe convertirlas a JSON y fallaría.
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "socios")
 public class Socio {
@@ -57,7 +62,9 @@ public class Socio {
      * Lado "uno" de la relación Socio 1 --- * Inscripcion.
      * mappedBy = "socio" indica que la clave foránea la tiene el atributo
      * "socio" de la entidad Inscripcion; esta lista no crea columna alguna.
+     * @JsonIgnore corta el ciclo infinito del JSON (socio -> inscripciones -> socio -> ...).
      */
+    @JsonIgnore
     @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL)
     private List<Inscripcion> inscripciones = new ArrayList<>();
 

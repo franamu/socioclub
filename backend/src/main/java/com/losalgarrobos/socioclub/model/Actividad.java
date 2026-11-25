@@ -1,5 +1,7 @@
 package com.losalgarrobos.socioclub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +18,9 @@ import java.util.List;
 /**
  * Entidad JPA para la tabla "actividades".
  */
+// Inscripcion.actividad es LAZY: puede llegar como proxy de Hibernate, que agrega estas dos
+// propiedades internas. Se ignoran porque Jackson no sabe convertirlas a JSON y fallaría.
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "actividades")
 public class Actividad {
@@ -50,9 +56,21 @@ public class Actividad {
     @Column(name = "cuota_mensual", nullable = false, precision = 10, scale = 2)
     private BigDecimal cuotaMensual;
 
-    /** Lado "uno" de Actividad 1 --- * Inscripcion. */
+    /**
+     * Lado "uno" de Actividad 1 --- * Inscripcion.
+     * @JsonIgnore corta el ciclo infinito del JSON: sin él, la actividad mostraría sus
+     * inscripciones, cada inscripción su actividad, y así sin fin.
+     */
+    @JsonIgnore
     @OneToMany(mappedBy = "actividad")
     private List<Inscripcion> inscripciones = new ArrayList<>();
+
+    /**
+     * Lugares libres. @Transient: no es una columna de la tabla, lo calcula ActividadService
+     * en cada consulta. Si se guardara, podría quedar desactualizado con cada alta o baja.
+     */
+    @Transient
+    private Integer cupoDisponible;
 
     public Actividad() {
     }
@@ -159,6 +177,14 @@ public class Actividad {
 
     public void setCuotaMensual(BigDecimal cuotaMensual) {
         this.cuotaMensual = cuotaMensual;
+    }
+
+    public Integer getCupoDisponible() {
+        return cupoDisponible;
+    }
+
+    public void setCupoDisponible(Integer cupoDisponible) {
+        this.cupoDisponible = cupoDisponible;
     }
 
     public List<Inscripcion> getInscripciones() {
